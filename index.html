@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+
+<html lang="th">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Generative AI สำหรับงาน HR — Interactive Workshop</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --navy:#071426; --navy2:#102A43; --navy3:#172033;
+  --panel:#182236; --panel2:#222b3c; --grey:#94A3B8; --grey2:#E5E7EB;
+  --orange:#F97316; --yellow:#FACC15; --lime:#84CC16; --purple:#8B5CF6; --white:#FFFFFF;
+  --red:#FB7185; --shadow:0 18px 42px rgba(0,0,0,.32); --radius:22px;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:'IBM Plex Sans Thai',Arial,sans-serif;background:
+ radial-gradient(circle at 15% 10%, rgba(139,92,246,.30), transparent 32%),
+ radial-gradient(circle at 85% 88%, rgba(249,115,22,.24), transparent 36%),
+ linear-gradient(135deg,var(--navy) 0%,var(--navy2) 55%,#0f172a 100%);color:var(--white);overflow:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.38;background-image:
+ linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px, transparent 1px);background-size:52px 52px}
+.deck{position:relative;z-index:1;height:100%;display:grid;grid-template-rows:auto 1fr auto}.topbar,.footer{display:flex;align-items:center;gap:12px;padding:10px 18px;background:rgba(7,20,38,.88);backdrop-filter:blur(10px);border-color:rgba(255,255,255,.09);box-shadow:var(--shadow);flex-wrap:wrap}.topbar{border-bottom:1px solid rgba(255,255,255,.1)}.footer{border-top:1px solid rgba(255,255,255,.1);justify-content:space-between}
+.brand{display:flex;align-items:center;gap:10px;font-weight:900;font-size:19px}.orb{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--orange),var(--yellow),var(--lime));box-shadow:0 0 20px rgba(249,115,22,.45)}.badge,.level-pill{padding:7px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.07);font-size:13px;font-weight:800;color:#d7e3f4}.level-pill{background:rgba(139,92,246,.18);border-color:rgba(139,92,246,.42);color:#e9ddff}.progress-wrap{margin-left:auto;display:flex;align-items:center;gap:10px;min-width:320px;flex:1}.progress{height:11px;flex:1;border-radius:999px;background:rgba(255,255,255,.11);overflow:hidden}.progress>div{height:100%;width:0;background:linear-gradient(90deg,var(--orange),var(--yellow),var(--lime),var(--purple));transition:.3s}
+.slide{display:none;height:100%;padding:12px 16px;overflow:hidden}.slide.active{display:block}.screen{max-width:1240px;height:100%;margin:0 auto;display:grid;grid-auto-rows:min-content;align-content:center;gap:14px;transform-origin:top center}.center{text-align:center}.kicker{display:inline-flex;align-items:center;gap:8px;justify-self:start;padding:7px 14px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);font-weight:900;color:#dce8f8;font-size:13px}.center .kicker{justify-self:center}.dot{width:10px;height:10px;border-radius:50%;background:var(--orange);box-shadow:0 0 14px rgba(249,115,22,.8)}h1,h2,h3,p{margin:0}.title{font-size:clamp(32px,4vw,58px);font-weight:900;line-height:1.12;letter-spacing:-.02em}.subtitle{font-size:clamp(17px,1.5vw,22px);line-height:1.65;color:#d4dfef;max-width:1040px}.card{position:relative;overflow:hidden;border-radius:var(--radius);background:linear-gradient(180deg,rgba(30,41,59,.94),rgba(15,23,42,.94));border:1px solid rgba(255,255,255,.12);box-shadow:var(--shadow);padding:20px}.card:before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:linear-gradient(90deg,var(--orange),var(--yellow),var(--lime),var(--purple))}.card.light{background:linear-gradient(180deg,rgba(255,255,255,.97),rgba(229,231,235,.97));color:#111827}.card.orange{background:linear-gradient(180deg,rgba(249,115,22,.20),rgba(249,115,22,.06))}.card.yellow{background:linear-gradient(180deg,rgba(250,204,21,.18),rgba(250,204,21,.06))}.card.lime{background:linear-gradient(180deg,rgba(132,204,22,.18),rgba(132,204,22,.06))}.card.purple{background:linear-gradient(180deg,rgba(139,92,246,.20),rgba(139,92,246,.07))}.card.grey{background:linear-gradient(180deg,rgba(148,163,184,.16),rgba(148,163,184,.06))}.grid{display:grid;gap:14px}.two{grid-template-columns:repeat(2,minmax(0,1fr))}.three{grid-template-columns:repeat(3,minmax(0,1fr))}.four{grid-template-columns:repeat(4,minmax(0,1fr))}.six{grid-template-columns:repeat(3,minmax(0,1fr))}.split{display:grid;grid-template-columns:1.02fr .98fr;gap:16px;align-items:stretch}.big{font-size:clamp(21px,2vw,29px);font-weight:850;line-height:1.28}.med{font-size:clamp(16px,1.25vw,20px);line-height:1.65;color:#edf4ff}.small{font-size:clamp(14px,1vw,17px);line-height:1.62;color:#d5e1f3}ul,ol{margin:8px 0 0 20px;padding:0;line-height:1.65}.note{padding:14px 16px;border-radius:17px;background:rgba(250,204,21,.10);border:1px solid rgba(250,204,21,.28);color:#fff5c2;font-size:15px;line-height:1.6}.path{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}.step{padding:16px;border-radius:18px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);min-height:152px}.num{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--orange),var(--yellow));color:#111827;font-weight:900;margin-bottom:10px}.tag{display:inline-block;padding:4px 9px;border-radius:999px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.13);font-size:12px;font-weight:900;color:#d7e3f4;margin-bottom:8px}.textarea{width:100%;min-height:68px;resize:none;border-radius:14px;border:1px solid rgba(255,255,255,.16);background:rgba(7,20,38,.58);color:#fff;padding:10px 12px;font-size:14px;line-height:1.45;font-family:inherit}.workspace{display:grid;gap:9px}.wrow{display:grid;grid-template-columns:112px 1fr;gap:10px;align-items:start}.wrow label{font-weight:900;padding-top:9px;color:#f0f5ff}.status{font-size:13px;color:#ffe08a}.btns{display:flex;gap:10px;flex-wrap:wrap}.btn,.navbtn{border:0;border-radius:999px;padding:10px 15px;font-weight:900;font-size:14px;cursor:pointer;color:#101827;background:linear-gradient(135deg,var(--orange),var(--yellow));box-shadow:0 10px 22px rgba(249,115,22,.22)}.btn.secondary,.navbtn{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);color:#fff;box-shadow:none}.btn.lime{background:var(--lime)}.btn.purple{background:var(--purple);color:#fff}.code{white-space:pre-wrap;background:#050c18;border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:14px;font-size:13px;line-height:1.52;overflow:auto;max-height:390px;color:#eef7ff}.reveal{cursor:pointer}.hidden{display:none;margin-top:10px}.reveal.revealed .hidden{display:block}.reveal.revealed .clickhint{display:none}.clickhint{display:inline-block;margin-top:8px;font-size:12px;color:#fff1a6;background:rgba(250,204,21,.13);border:1px solid rgba(250,204,21,.26);padding:5px 9px;border-radius:999px}.quiz-option{padding:12px 14px;border-radius:14px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);cursor:pointer;margin-top:8px;font-size:16px}.quiz-option.correct{outline:2px solid var(--lime);background:rgba(132,204,22,.20)}.quiz-option.wrong{outline:2px solid var(--red);background:rgba(251,113,133,.16)}.counter{font-weight:900;color:#d7e3f4}.facilitator{display:none;background:rgba(139,92,246,.12);border-color:rgba(139,92,246,.35)}.show-notes .facilitator{display:block}.toast{position:fixed;right:22px;bottom:76px;display:none;z-index:99;background:#0b1220;border:1px solid rgba(255,255,255,.18);padding:10px 14px;border-radius:12px}.mini-table{width:100%;border-collapse:separate;border-spacing:0 8px;font-size:14px}.mini-table th,.mini-table td{padding:9px 10px;text-align:left;background:rgba(255,255,255,.07);border-top:1px solid rgba(255,255,255,.1);border-bottom:1px solid rgba(255,255,255,.1)}.mini-table th{color:#fff3b0;font-weight:900}.mini-table td:first-child,.mini-table th:first-child{border-left:1px solid rgba(255,255,255,.1);border-radius:12px 0 0 12px}.mini-table td:last-child,.mini-table th:last-child{border-right:1px solid rgba(255,255,255,.1);border-radius:0 12px 12px 0}.scorebar{height:12px;background:rgba(255,255,255,.1);border-radius:999px;overflow:hidden}.scorebar span{display:block;height:100%;background:linear-gradient(90deg,var(--orange),var(--yellow),var(--lime));border-radius:999px}.slide.active .kicker,.slide.active .title,.slide.active .subtitle,.slide.active .card,.slide.active .note,.slide.active .step{animation:fadeUp .34s ease-out both}@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}@media(max-width:1100px){.path,.two,.three,.four,.six,.split,.wrow{grid-template-columns:1fr}.progress-wrap{flex-basis:100%;margin-left:0}.screen{align-content:start;overflow:auto}.slide{overflow:auto}}@media print{@page{size:A4 landscape;margin:0}.topbar,.footer,.toast{display:none!important}html,body{overflow:visible;height:auto}.deck{display:block}.slide{display:block!important;height:210mm;break-after:page;background:linear-gradient(135deg,var(--navy),var(--navy2))}.screen{zoom:.72}.hidden,.facilitator{display:block!important}}
+
+
+/* --- v2 fixes: Thai readability, unified footer font, overview, fullscreen toggle --- */
+html, body, body *, button, textarea, input, select {
+  font-family:'IBM Plex Sans Thai','Sarabun','Tahoma','Arial',sans-serif !important;
+}
+body, .title, .subtitle, .big, .med, .small, li, .note, .quiz-option, .code, .textarea, .navbtn, .btn {
+  word-break:normal;
+  overflow-wrap:break-word;
+  line-break:auto;
+  hyphens:none;
+}
+.title, .big { text-wrap:balance; }
+.subtitle, .med, .small, li, .note { text-wrap:pretty; }
+.footer, .footer *, .topbar, .topbar * { font-family:'IBM Plex Sans Thai','Sarabun','Tahoma','Arial',sans-serif !important; }
+.code{
+  font-size:clamp(15px,1.14vw,18px);
+  line-height:1.68;
+  color:#f8fbff;
+  max-height:430px;
+  letter-spacing:0;
+}
+.card .code{font-size:clamp(15px,1.16vw,18px)}
+.card.light .mini-table th,
+.card.light .mini-table td{
+  color:#111827 !important;
+  background:rgba(17,24,39,.055) !important;
+}
+.card.light .mini-table th{font-weight:900;background:rgba(17,24,39,.10) !important;}
+.card.grey, .card.yellow{color:#fff}
+.card.grey .big,.card.grey .med,.card.grey .small,.card.grey li,
+.card.yellow .big,.card.yellow .med,.card.yellow .small,.card.yellow li{color:#f8fbff}
+.status{color:#fff0b3;background:rgba(7,20,38,.30);display:inline-block;padding:3px 8px;border-radius:999px}
+.footer .navgroup{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.footer .navbtn{font-size:14px;line-height:1.2}
+.overview{position:fixed;inset:0;z-index:120;display:none;background:rgba(7,20,38,.96);backdrop-filter:blur(10px);padding:24px;overflow:auto;color:#fff}
+.overview.open{display:block}
+.overview-head{max-width:1180px;margin:0 auto 16px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.overview-title{font-size:clamp(24px,2.6vw,38px);font-weight:900;line-height:1.2}
+.overview-grid{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+.slide-thumb{border:1px solid rgba(255,255,255,.14);background:linear-gradient(180deg,rgba(30,41,59,.96),rgba(15,23,42,.96));border-radius:18px;padding:14px;min-height:120px;cursor:pointer;box-shadow:var(--shadow)}
+.slide-thumb:hover{border-color:rgba(250,204,21,.55);transform:translateY(-1px)}
+.slide-thumb .thumb-no{font-size:12px;font-weight:900;color:#ffdf70;margin-bottom:6px}
+.slide-thumb .thumb-title{font-size:17px;font-weight:900;line-height:1.35;color:#fff}
+.slide-thumb .thumb-level{font-size:12px;color:#cbd5e1;margin-top:8px}
+@media(max-width:1100px){.code{font-size:14px;max-height:360px}.overview{padding:16px}.footer .navbtn{font-size:13px;padding:9px 11px}}
+
+
+/* --- v3 refinements: no print button, better Thai wrapping, mission guidance --- */
+:root{--safe-title:clamp(28px,3.35vw,50px)}
+.title{font-size:var(--safe-title);max-width:1180px;overflow-wrap:normal;word-break:normal;line-break:loose;text-wrap:balance}
+.subtitle,.med,.small,li,.note,.big{word-break:normal;overflow-wrap:break-word;line-break:loose}
+.nowrap{white-space:nowrap}
+.card .code,.code{font-size:clamp(16px,1.18vw,20px);line-height:1.72}
+.step{min-height:136px}.path{gap:12px}.screen{padding-inline:4px}
+.card.light,.card.light *{color:#111827!important}
+.card.grey .clickhint,.card.yellow .clickhint{color:#fff7c2}
+.footer .navbtn[onclick*="print"], button[onclick*="print"]{display:none!important}
+@media(max-width:1180px){.title{font-size:clamp(25px,3.7vw,44px)}.subtitle{font-size:clamp(15px,1.6vw,20px)}.card{padding:17px}.big{font-size:clamp(19px,2vw,26px)}}
+@media(max-width:760px){.title{font-size:clamp(23px,6vw,36px)}.nowrap{white-space:normal}.grid.three,.grid.two{grid-template-columns:1fr!important}}
+
+
+
+/* --- v4 targeted refinements --- */
+.nowrap-title{white-space:nowrap;font-size:clamp(18px,1.55vw,24px)!important;letter-spacing:-.015em}
+.maturity-grid .card{padding:18px 14px}
+.split-title{display:block;line-height:1.08}
+.split-title .title-line{display:block}
+.split-title .top{font-size:.88em;color:#fff}
+.split-title .sub{font-size:.72em;color:#dbeafe;margin-top:6px;line-height:1.18;letter-spacing:-.01em}
+.large-code{font-size:clamp(16px,1.2vw,19px)!important;line-height:1.65!important;max-height:240px}
+.prompt-starter{background:linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,.045))}
+.light-slide{background:linear-gradient(180deg,#f8fafc 0%,#ffffff 56%,#fff9e8 100%);color:#2b4258}
+.light-slide:before{opacity:.65;background-image:linear-gradient(rgba(15,23,42,.055) 1px, transparent 1px),linear-gradient(90deg,rgba(15,23,42,.05) 1px, transparent 1px);background-size:48px 48px}
+.light-slide .screen{max-width:1180px}
+.light-slide .kicker{background:#eaf4ff;border-color:#c6dff4;color:#334e68}
+.light-slide .dot{background:#8dc6eb;box-shadow:none}
+.light-slide .title{color:#2b4258;text-shadow:none;letter-spacing:-.025em}
+.light-slide .subtitle{color:#5d748c;max-width:1100px}
+.light-slide .card{box-shadow:0 16px 34px rgba(15,23,42,.10);border:1px solid #d9e2ec;background:#fff;color:#2b4258}
+.light-slide .card:before{background:linear-gradient(90deg,#8dc6eb,#84CC16,#FACC15)}
+.light-slide .take-card ul{font-size:clamp(17px,1.28vw,21px);line-height:1.75;color:#243b53}
+.light-slide .save-card{background:#fff7d6;border-color:#f3d772;color:#243b53}
+.light-slide .save-card .med{color:#243b53}
+.light-slide .light-note{background:#fff3bf;border-color:#f3d772;color:#374151}
+.save-prompts{margin-top:14px;background:#3f8f5f!important;color:#fff!important;box-shadow:0 12px 24px rgba(63,143,95,.18)!important}
+@media(max-width:1100px){.nowrap-title{white-space:normal}.split-title .sub{font-size:.66em}.large-code{font-size:14px!important}.light-slide .screen{align-content:start}}
+
+/* --- v5 action plan slide refinements --- */
+.post-workspace .wrow{grid-template-columns:170px 1fr;align-items:start}
+.post-workspace .wrow label{line-height:1.45;padding-top:8px}
+.action-card{background:linear-gradient(180deg,rgba(30,41,59,.96),rgba(10,20,38,.96))}
+.action-guidance{background:linear-gradient(180deg,rgba(250,204,21,.18),rgba(249,115,22,.07))}
+.action-guidance .med,.action-guidance .small{color:#f7fbff}
+.action-field{min-height:60px;font-size:15px}
+@media(max-width:1100px){.post-workspace .wrow{grid-template-columns:1fr}.post-workspace .wrow label{padding-top:0}}
+
+/* v6 action plan refinement */
+.action-plan-layout{grid-template-columns:1.05fr .95fr;align-items:stretch}
+.action-plan-questions .wrow{grid-template-columns:220px 1fr;gap:12px}
+.action-plan-questions .wrow label{font-size:15px;line-height:1.45;color:var(--white);font-weight:850}
+.action-plan-questions .textarea{min-height:54px;font-size:15px;line-height:1.45}
+.card.purple{background:linear-gradient(180deg,rgba(139,92,246,.18),rgba(139,92,246,.07));border-color:rgba(139,92,246,.34)}
+.card.purple:before{background:linear-gradient(90deg,var(--purple),var(--orange),var(--yellow))}
+.action-guidance ol{margin:10px 0 0 20px}
+.action-guidance li{margin:0 0 12px 0;font-size:17px;line-height:1.45;color:var(--white)}
+.action-guidance .small{color:#dbe7f5}
+@media(max-width:1100px){.action-plan-layout,.action-plan-questions .wrow{grid-template-columns:1fr!important}}
+
+
+
+/* --- v9 footer lock + readable action plan fixes --- */
+html, body {
+  height:100vh;
+  height:100dvh;
+  max-height:100vh;
+  max-height:100dvh;
+  overflow:hidden !important;
+}
+.deck{
+  height:100vh;
+  height:100dvh;
+  min-height:0;
+  display:grid;
+  grid-template-rows:auto minmax(0,1fr) auto !important;
+  overflow:hidden;
+}
+.topbar,.footer{
+  flex:0 0 auto;
+  position:relative;
+  z-index:20;
+}
+#slides{
+  min-height:0;
+  height:100%;
+  overflow:hidden;
+  position:relative;
+}
+.slide{
+  height:100%;
+  min-height:0;
+  overflow:hidden !important;
+}
+.screen{
+  min-height:0;
+  max-height:100%;
+}
+/* Action Plan page: keep footer visible, but use larger readable type */
+.slide[data-level="ACTION PLAN"] .screen{
+  gap:9px;
+  align-content:center;
+  max-width:1260px;
+}
+.slide[data-level="ACTION PLAN"] .kicker{
+  font-size:13px;
+  padding:6px 12px;
+}
+.slide[data-level="ACTION PLAN"] .title{
+  font-size:clamp(30px,3vw,42px);
+  line-height:1.12;
+}
+.slide[data-level="ACTION PLAN"] .subtitle{
+  font-size:clamp(15px,1.25vw,18px);
+  line-height:1.45;
+  max-width:1120px;
+}
+.action-plan-layout{
+  grid-template-columns:1.12fr .88fr;
+  gap:14px;
+  align-items:stretch;
+}
+.action-card,.action-guidance{
+  padding:16px;
+}
+.action-card .big,.action-guidance .big,.slide[data-level="ACTION PLAN"] .card.purple .big{
+  font-size:clamp(21px,1.7vw,26px);
+  line-height:1.2;
+}
+.action-plan-questions{
+  gap:6px;
+}
+.action-plan-questions .wrow{
+  grid-template-columns:220px 1fr;
+  gap:9px;
+}
+.action-plan-questions .wrow label{
+  font-size:15px;
+  line-height:1.35;
+  padding-top:6px;
+  color:#f8fbff;
+  font-weight:900;
+}
+.action-plan-questions .textarea{
+  min-height:43px;
+  height:43px;
+  font-size:15px;
+  line-height:1.34;
+  padding:7px 10px;
+  border-radius:12px;
+}
+.slide[data-level="ACTION PLAN"] .grid{
+  gap:10px!important;
+}
+.slide[data-level="ACTION PLAN"] ol,
+.slide[data-level="ACTION PLAN"] ul{
+  margin-top:6px;
+  margin-left:19px;
+  line-height:1.48;
+}
+.slide[data-level="ACTION PLAN"] li{
+  font-size:15px;
+  line-height:1.48;
+}
+.slide[data-level="ACTION PLAN"] .small{
+  font-size:14px;
+  line-height:1.44;
+}
+.slide[data-level="ACTION PLAN"] .med{
+  font-size:15.5px;
+  line-height:1.48;
+}
+.slide[data-level="ACTION PLAN"] .btns{
+  margin-top:10px!important;
+}
+.slide[data-level="ACTION PLAN"] .btn{
+  padding:10px 15px;
+  font-size:14px;
+}
+.slide[data-level="ACTION PLAN"] .facilitator{
+  display:none!important;
+}
+@media(max-height:720px) and (orientation:landscape){
+  .slide[data-level="ACTION PLAN"] .screen{gap:7px}
+  .slide[data-level="ACTION PLAN"] .title{font-size:clamp(27px,2.7vw,36px)}
+  .slide[data-level="ACTION PLAN"] .subtitle{font-size:14px;line-height:1.36}
+  .action-card,.action-guidance{padding:13px}
+  .action-card .big,.action-guidance .big,.slide[data-level="ACTION PLAN"] .card.purple .big{font-size:20px}
+  .action-plan-questions .wrow{grid-template-columns:205px 1fr;gap:7px}
+  .action-plan-questions .wrow label{font-size:14px;line-height:1.28;padding-top:5px}
+  .action-plan-questions .textarea{height:39px;min-height:39px;font-size:14px;line-height:1.25;padding:6px 9px}
+  .slide[data-level="ACTION PLAN"] li{font-size:14px;line-height:1.38}
+  .slide[data-level="ACTION PLAN"] .small{font-size:13px;line-height:1.34}
+  .slide[data-level="ACTION PLAN"] .med{font-size:14px;line-height:1.36}
+  .slide[data-level="ACTION PLAN"] .btn{font-size:13.5px;padding:9px 13px}
+}
+@media(max-width:1100px){
+  .slide{overflow:auto!important}
+  .action-plan-layout,.action-plan-questions .wrow{grid-template-columns:1fr!important}
+  .action-plan-questions .textarea{height:52px;min-height:52px}
+}
+
+</style>
+</head>
+<body>
+<div class="deck">
+<div class="topbar">
+<div class="brand"><span class="orb"></span> Generative AI สำหรับงาน HR</div>
+<div class="badge">3 Missions</div><div class="badge">Prompt Path</div><div class="badge">Thai-first Interactive Deck</div>
+<div class="progress-wrap"><div class="level-pill" id="levelPill">INTRO</div><div class="progress"><div id="bar"></div></div><div class="badge" id="barText">0%</div></div>
+</div>
+<main id="slides">
+<section class="slide active" data-level="INTRO"><div class="screen center">
+<div class="kicker"><span class="dot"></span> HR AI WORKSHOP</div><h1 class="title">Generative AI สำหรับงาน HR</h1>
+<p class="subtitle">จากผู้ช่วยเขียนงาน → ผู้ช่วยจัดโครงสร้าง → ผู้ช่วยวิเคราะห์ข้อมูล → ผู้ช่วยเตรียมข้อมูลเพื่อการตัดสินใจ</p>
+<div class="grid three"><div class="card orange"><div class="big">เข้าใจ AI</div><p class="med">รู้ว่า AI ทำอะไรได้ ทำอะไรไม่ได้ และควรใช้อย่างไรในงาน HR</p></div><div class="card purple"><div class="big">สั่งงาน AI ให้เป็น</div><p class="med">ใช้ HR Prompt Path: Goal / Context / Data / Criteria / Output / Guardrail</p></div><div class="card lime"><div class="big">ลงมือทำจริง</div><p class="med">ฝึกกับข้อมูล Primary Shoes และผลสำรวจ Employee Engagement</p></div></div>
+<div class="btns" style="justify-content:center"><button class="btn" onclick="go(1)">เริ่มต้นหลักสูตร</button></div>
+</div></section>
+<section class="slide" data-level="WHY AI"><div class="screen"><div class="kicker"><span class="dot"></span> WHY NOW</div><h2 class="title">ทำไม HR ต้องเข้าใจ AI ตอนนี้</h2>
+<div class="split"><div class="card"><div class="big">AI ไม่ใช่แค่เครื่องมือเขียนข้อความ</div><ul><li>ช่วยร่างและปรับภาษา</li><li>ช่วยสรุปข้อมูลยาวให้เข้าใจง่าย</li><li>ช่วยจัดหมวดหมู่และเปรียบเทียบตามเกณฑ์</li><li>ช่วยเตรียมตัวเลือกเพื่อการตัดสินใจ</li></ul></div><div class="card reveal yellow" onclick="reveal(this)"><div class="big">AI จะช่วย HR ได้ดีที่สุดเมื่อ…</div><p class="med">ลองกดเปิดคำตอบ</p><span class="clickhint">กดเพื่อเปิด</span><div class="hidden"><p class="med"><b>HR รู้ว่าจะให้ AI ใช้ข้อมูลอะไร วิเคราะห์ด้วยเกณฑ์อะไร และต้องไม่ตัดสินใจแทนมนุษย์</b></p></div></div></div>
+<div class="note">หัวใจของคอร์สนี้คือการเปลี่ยนจาก “ถาม AI แบบกว้าง ๆ” เป็น “สั่งงาน AI ด้วยโครงสร้าง HR ที่ตรวจสอบได้”</div></div></section>
+<section class="slide" data-level="MAP"><div class="screen"><div class="kicker"><span class="dot"></span> LEARNING MAP</div><h2 class="title">เส้นทางการเรียนรู้วันนี้</h2>
+<div class="grid six"><div class="step"><div class="num">1</div><div class="big">เข้าใจ AI</div><p class="small">Generative AI คืออะไร และช่วย HR แบบไหน</p></div><div class="step"><div class="num">2</div><div class="big">ใช้ให้ปลอดภัย</div><p class="small">ข้อจำกัด ความเสี่ยง และ Human Review</p></div><div class="step"><div class="num">3</div><div class="big">เขียน Prompt</div><p class="small">ใช้ Goal / Context / Data / Criteria / Output / Guardrail</p></div><div class="step"><div class="num">4</div><div class="big">ใช้ Case Company</div><p class="small">Primary Shoes เป็นบริบทฝึกงาน HR</p></div><div class="step"><div class="num">5</div><div class="big">ฝึก 3 Missions</div><p class="small">JD, KPI/Competency, Engagement → Dashboard</p></div><div class="step"><div class="num">6</div><div class="big">นำไปใช้จริง</div><p class="small">Export Prompt และใช้ต่อกับ AI tool ของผู้เรียน</p></div></div></div></section>
+<section class="slide" data-level="OBJECTIVES"><div class="screen"><div class="kicker"><span class="dot"></span> COURSE OBJECTIVES</div><h2 class="title">เป้าหมายของหลักสูตร</h2>
+<div class="grid two"><div class="card purple"><div class="big">หลังจบหลักสูตร ผู้เรียนจะสามารถ…</div><ol><li>อธิบายได้ว่า Generative AI ทำอะไรได้และทำอะไรไม่ได้</li><li>เขียน Prompt สำหรับงาน HR อย่างเป็นระบบ</li><li>ใช้ AI ช่วยร่าง วิเคราะห์ และจัดโครงสร้างงาน HR</li><li>ใช้ AI วิเคราะห์ข้อมูลเบื้องต้นจาก case ที่กำหนด</li><li>แยกงานที่ AI ช่วยได้ กับงานที่ HR ต้องตัดสินใจเอง</li></ol></div><div class="card light"><div class="big">วันนี้เราจะไม่เรียนแบบท่องจำ</div><p class="med" style="color:#1f2937">แต่จะเรียนแบบ “ใช้จริง” ผ่านภารกิจที่ให้ผู้เรียนสร้าง Prompt ของตัวเอง และ export เพื่อนำไปใช้ต่อได้ทันที</p></div></div></div></section>
+<section class="slide" data-level="GEN AI"><div class="screen"><div class="kicker"><span class="dot"></span> GENERATIVE AI</div><h2 class="title">Generative AI คืออะไร แบบ HR เข้าใจง่าย</h2>
+<div class="grid three"><div class="card orange"><div class="big">สร้าง</div><p class="med">ร่างอีเมล JD แบบฟอร์ม คำถามสัมภาษณ์ หรือ outline รายงาน</p></div><div class="card yellow"><div class="big">สรุป</div><p class="med">ย่อข้อมูลยาว แยกประเด็นสำคัญ และทำ executive summary</p></div><div class="card purple"><div class="big">วิเคราะห์</div><p class="med">เปรียบเทียบข้อมูลตามเกณฑ์ หา pattern และเสนอทางเลือก</p></div></div><div class="note">คุณภาพคำตอบของ AI ขึ้นกับคุณภาพของคำสั่ง ข้อมูล และเกณฑ์ที่เราให้</div></div></section>
+<section class="slide" data-level="HR USE CASES"><div class="screen"><div class="kicker"><span class="dot"></span> HR USE CASES</div><h2 class="title">AI ช่วยงาน HR แบบไหนได้บ้าง</h2>
+<div class="grid four"><div class="card"><span class="tag">Document</span><div class="big">Job Description</div><p class="small">ร่างหน้าที่ คุณสมบัติ และ competency</p></div><div class="card"><span class="tag">Performance</span><div class="big">KPI</div><p class="small">ช่วยเสนอ KPI ที่เชื่อมกับเป้าหมายธุรกิจ</p></div><div class="card"><span class="tag">People</span><div class="big">Competency</div><p class="small">แปลงค่านิยมเป็นพฤติกรรมที่คาดหวัง</p></div><div class="card"><span class="tag">Feedback</span><div class="big">Evaluation</div><p class="small">ช่วยจัดโครงสร้าง evidence และคำถาม feedback</p></div><div class="card"><span class="tag">Learning</span><div class="big">Training Material</div><p class="small">ทำ outline สื่ออบรม และกิจกรรม</p></div><div class="card"><span class="tag">Analytics</span><div class="big">Data Analysis</div><p class="small">สรุป survey insight และ action plan</p></div><div class="card"><span class="tag">Communication</span><div class="big">HR Communication</div><p class="small">ปรับ tone และความชัดเจนของข้อความ</p></div><div class="card"><span class="tag">Decision Prep</span><div class="big">Discussion Prep</div><p class="small">เตรียมประเด็นเพื่อคุยกับผู้บริหาร/หัวหน้า</p></div></div></div></section>
+<section class="slide" data-level="MATURITY"><div class="screen"><div class="kicker"><span class="dot"></span> HR AI MATURITY</div><h2 class="title">จากผู้ช่วยเขียนงาน สู่ผู้ช่วยคิดเชิง HR</h2>
+<div class="grid five maturity-grid" style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px"><div class="card orange"><div class="big">1. Drafting</div><p class="small">ช่วยร่างข้อความ</p></div><div class="card yellow"><div class="big nowrap-title maturity-title">2. Summarizing</div><p class="small">ช่วยสรุปข้อมูล</p></div><div class="card grey"><div class="big">3. Structuring</div><p class="small">ช่วยจัดโครงสร้าง</p></div><div class="card purple"><div class="big">4. Analyzing</div><p class="small">ช่วยวิเคราะห์ตามเกณฑ์</p></div><div class="card lime"><div class="big">5. Decision Prep</div><p class="small">ช่วยเตรียมข้อมูลให้มนุษย์ตัดสินใจ</p></div></div>
+<div class="note">วันนี้เราเน้นระดับ 1–5 แต่ไม่มีระดับ “AI ตัดสินใจแทน HR” เพราะเรื่องคนต้องมีความรับผิดชอบ ความเป็นธรรม และบริบทมนุษย์</div></div></section>
+<section class="slide" data-level="SAFETY"><div class="screen"><div class="kicker"><span class="dot"></span> RESPONSIBLE AI</div><h2 class="title">AI เก่งอะไร / ไม่ควรทำอะไร</h2>
+<div class="grid two"><div class="card lime"><div class="big">ใช้ AI ได้ดี</div><ul><li>จัดหมวดหมู่ข้อมูล</li><li>เปรียบเทียบตามเกณฑ์</li><li>สร้าง draft เพื่อให้ HR ตรวจ</li><li>เสนอคำถามที่ควรถามเพิ่ม</li><li>ระบุข้อมูลที่ยังไม่พอ</li></ul></div><div class="card orange"><div class="big">ไม่ควรให้ AI ทำแทน</div><ul><li>ตัดสินเลื่อนตำแหน่ง</li><li>ให้คะแนนผลงานสุดท้าย</li><li>คัดเลือกผู้สมัครขั้นสุดท้าย</li><li>สรุปข้อเท็จจริงโดยไม่มีหลักฐาน</li><li>ใช้ข้อมูลส่วนบุคคลโดยไม่ระวัง</li></ul></div></div></div></section>
+<section class="slide" data-level="HUMAN REVIEW"><div class="screen"><div class="kicker"><span class="dot"></span> HUMAN REVIEW</div><h2 class="title">AI ช่วยเตรียมข้อมูล แต่ HR เป็นผู้ตัดสินใจ</h2>
+<div class="grid three"><div class="card"><div class="big">AI</div><p class="med">จัดข้อมูล เปรียบเทียบตามเกณฑ์ เสนอทางเลือก และตั้งคำถาม</p></div><div class="card purple"><div class="big">HR</div><p class="med">ประเมินบริบท ความเป็นธรรม ความเสี่ยง<br/>และผลกระทบต่อคน</p></div><div class="card yellow"><div class="big">ผู้บริหาร/หัวหน้า</div><p class="med">ใช้ข้อมูลประกอบการตัดสินใจ โดยไม่ปล่อยให้ AI ตัดสินใจแทน</p></div></div>
+<div class="note">ประโยคจำง่าย: “AI prepares. HR decides.” หรือ “AI เตรียมข้อมูล HR ตัดสินใจ”</div></div></section>
+<section class="slide" data-level="RISK PROMPTS"><div class="screen"><div class="kicker"><span class="dot"></span> RISKY PROMPTS</div><h2 class="title">Prompt เสี่ยง vs Prompt ที่ดีกว่า</h2><p class="subtitle">กดแต่ละการ์ดเพื่อดูวิธีปรับ Prompt ให้ปลอดภัยขึ้น</p>
+<div class="grid four"><div class="card reveal orange" onclick="reveal(this)"><div class="big">Promotion</div><p class="med">“เลือกคนที่ควรได้เลื่อนตำแหน่ง”</p><span class="clickhint">กดเพื่อปรับ</span><div class="hidden small"><b>ดีกว่า:</b> ช่วยจัดหลักฐานตามเกณฑ์ readiness และระบุข้อมูลที่ยังไม่พอ โดยไม่ตัดสินผลสุดท้าย</div></div><div class="card reveal orange" onclick="reveal(this)"><div class="big">Performance</div><p class="med">“ให้คะแนน performance คนนี้”</p><span class="clickhint">กดเพื่อปรับ</span><div class="hidden small"><b>ดีกว่า:</b> จัด evidence เป็น strengths, development areas, unclear evidence และคำถามให้หัวหน้าตรวจสอบ</div></div><div class="card reveal orange" onclick="reveal(this)"><div class="big">Engagement</div><p class="med">“ทีมไหนมีปัญหามากที่สุด”</p><span class="clickhint">กดเพื่อปรับ</span><div class="hidden small"><b>ดีกว่า:</b> วิเคราะห์ pattern ระดับภาพรวม พร้อมข้อจำกัดของข้อมูล และห้ามระบุรายบุคคล</div></div><div class="card reveal orange" onclick="reveal(this)"><div class="big">Dashboard</div><p class="med">“สร้าง dashboard HR ให้หน่อย”</p><span class="clickhint">กดเพื่อปรับ</span><div class="hidden small"><b>ดีกว่า:</b> เสนอ indicator ที่วัดได้ มี data source, frequency, owner และ action trigger</div></div></div></div></section>
+<section class="slide" data-level="PROMPT PATH"><div class="screen"><div class="kicker"><span class="dot"></span> HR PROMPT PATH</div><h2 class="title">โครงสร้าง Prompt สำหรับงาน HR</h2>
+<div class="path"><div class="step"><div class="num">1</div><div class="big">Goal</div><p class="small">ต้องการให้ AI ช่วยทำอะไร</p></div><div class="step"><div class="num">2</div><div class="big">Context</div><p class="small">งานนี้เกี่ยวกับใคร ใช้เพื่ออะไร</p></div><div class="step"><div class="num">3</div><div class="big">Data</div><p class="small">ให้ AI ใช้ข้อมูลอะไรบ้าง</p></div><div class="step"><div class="num">4</div><div class="big">Criteria</div><p class="small">ให้วิเคราะห์ด้วยเกณฑ์อะไร</p></div><div class="step"><div class="num">5</div><div class="big">Output</div><p class="small">ต้องการคำตอบรูปแบบไหน</p></div><div class="step"><div class="num">6</div><div class="big">Guardrail</div><p class="small">AI ห้ามทำอะไร / ต้องระวังอะไร</p></div></div></div></section>
+<section class="slide" data-level="WEAK PROMPT"><div class="screen"><h2 class="title">ตัวอย่าง Prompt ที่อ่อน</h2>
+<div class="split"><div class="card orange"><div class="big">Weak Prompt</div><div class="code">ช่วยเขียน JD ให้หน่อย</div></div><div class="card reveal yellow" onclick="reveal(this)"><div class="big">ขาดอะไรบ้าง?</div><p class="med">กดเพื่อเปิดรายการ</p><span class="clickhint">กดเพื่อเปิด</span><div class="hidden"><ul><li>ไม่รู้ตำแหน่ง</li><li>ไม่รู้บริบทธุรกิจ</li><li>ไม่รู้หน้าที่หลัก</li><li>ไม่รู้ competency ที่ต้องการ</li><li>ไม่รู้ format ของ output</li><li>ไม่มี guardrail</li></ul></div></div></div></div></section>
+<section class="slide" data-level="BETTER PROMPT"><div class="screen"><h2 class="title">Prompt ที่ดีขึ้น เพราะมีโครงสร้าง</h2>
+<div class="card"><div class="code">Goal: ช่วยร่าง Job Description สำหรับตำแหน่ง People &amp; Culture Officer
+Context: ใช้ในบริษัท Primary Shoes ที่กำลังเติบโตและต้องการสร้างวัฒนธรรมองค์กร
+Data: ใช้ข้อมูลหน้าที่ฝ่าย People &amp; Culture เป้าหมายบริษัท และค่านิยมองค์กร
+Criteria: เชื่อมโยงหน้าที่กับ Accountability, Commitment, Assertiveness
+Output: จัดเป็นตาราง หน้าที่หลัก / ความรับผิดชอบ / คุณสมบัติ / Competency
+Guardrail: อย่าสร้างข้อมูลเงินเดือนหรือสวัสดิการที่ไม่ได้ให้มา</div></div><div class="note">Prompt ที่ดีไม่จำเป็นต้องยาวเสมอไป แต่ต้องมีข้อมูล เกณฑ์ รูปแบบคำตอบ และขอบเขตที่ชัด</div></div></section>
+<section class="slide" data-level="QUIZ"><div class="screen"><div class="kicker"><span class="dot"></span> QUICK CHECK</div><h2 class="title">ส่วนนี้คืออะไรใน Prompt Path?</h2>
+<div class="grid two"><div class="card"><p class="med">“ใช้ข้อมูลเป้าหมายยอดขาย 200 ล้านบาท และกำไรสุทธิ 30%”</p><div class="quiz-option" onclick="markQuiz(this,false)">Criteria</div><div class="quiz-option" onclick="markQuiz(this,true)">Data</div></div><div class="card"><p class="med">“วิเคราะห์โดยเชื่อมโยงกับค่านิยมองค์กร”</p><div class="quiz-option" onclick="markQuiz(this,true)">Criteria</div><div class="quiz-option" onclick="markQuiz(this,false)">Output</div></div><div class="card"><p class="med">“ตอบเป็นตาราง 4 คอลัมน์”</p><div class="quiz-option" onclick="markQuiz(this,true)">Output</div><div class="quiz-option" onclick="markQuiz(this,false)">Context</div></div><div class="card"><p class="med">“ห้ามตัดสินว่าใครควรเลื่อนตำแหน่ง”</p><div class="quiz-option" onclick="markQuiz(this,false)">Goal</div><div class="quiz-option" onclick="markQuiz(this,true)">Guardrail</div></div></div></div></section>
+<section class="slide" data-level="CRITERIA"><div class="screen"><div class="kicker"><span class="dot"></span> WHY CRITERIA MATTERS</div><h2 class="title">ทำไม Criteria สำคัญที่สุด</h2>
+<div class="grid two"><div class="card orange"><div class="big">ไม่มี Criteria</div><p class="med">AI มักให้คำตอบที่ฟังดูดี แต่กว้าง และไม่ผูกกับโจทย์ HR จริง</p></div><div class="card lime"><div class="big">มี Criteria</div><p class="med">AI สามารถเปรียบเทียบ จัดลำดับ อธิบายเหตุผล และเชื่อมโยงกับเป้าหมายธุรกิจได้ดีขึ้น</p></div></div><div class="note">ตัวอย่าง Criteria ในงาน HR: competency, KPI, business impact, fairness, risk level, data quality, employee experience</div></div></section>
+<section class="slide" data-level="CASE"><div class="screen"><div class="kicker"><span class="dot"></span> CASE COMPANY</div><h2 class="title">รู้จัก Primary Shoes Co., Ltd.</h2>
+<div class="grid three"><div class="card purple"><div class="big">Vision</div><p class="small">ผู้นำตลาดรองเท้ากีฬาสำหรับเด็กประถมในประเทศไทย ที่มอบคุณภาพ ความปลอดภัย และแรงบันดาลใจ</p></div><div class="card yellow"><div class="big">Business Goals</div><ul><li>ยอดขาย 200 ล้านบาทภายในปี 2026</li><li>กำไรสุทธิ 30%</li><li>Customer Satisfaction &gt; 90%</li></ul></div><div class="card lime"><div class="big">Core Values</div><ul><li>Accountability</li><li>Commitment</li><li>Assertiveness</li></ul></div></div></div></section>
+<section class="slide" data-level="BUSINESS"><div class="screen"><div class="kicker"><span class="dot"></span> BUSINESS GOALS</div><h2 class="title">เป้าหมายธุรกิจที่ HR ต้องเข้าใจ</h2>
+<div class="split"><div class="card light"><div class="big">เป้าหมายบริษัท</div><table class="mini-table" style="color:#111827"><tr><th>เป้าหมาย</th><th>ตัวเลข</th><th>โจทย์ HR ที่เกี่ยวข้อง</th></tr><tr><td>ยอดขาย</td><td>200 ล้านบาท</td><td>คนขาย / service / marketing ต้องพร้อม</td></tr><tr><td>กำไรสุทธิ</td><td>30%</td><td>productivity, cost awareness, workforce planning</td></tr><tr><td>Customer Satisfaction</td><td>&gt; 90%</td><td>service skill, accountability, feedback loop</td></tr></table></div><div class="card reveal purple" onclick="reveal(this)"><div class="big">คำถามสำหรับ HR</div><p class="med">เป้าหมายธุรกิจเหล่านี้แปลเป็นโจทย์เรื่องคนอย่างไร?</p><span class="clickhint">กดเพื่อดูตัวอย่าง</span><div class="hidden small">เช่น สรรหาคนที่ตรงค่านิยม พัฒนา soft skill/leadership สร้าง KPI ที่วัดได้ และวิเคราะห์ engagement เพื่อรักษาคนเก่ง</div></div></div></div></section>
+<section class="slide" data-level="VALUES"><div class="screen"><div class="kicker"><span class="dot"></span> CORE VALUES</div><h2 class="title">เปลี่ยนค่านิยมองค์กรให้เป็นเกณฑ์ HR</h2>
+<div class="grid three"><div class="card"><div class="big">Accountability</div><p class="med">รับผิดชอบต่อผลลัพธ์ เรียนรู้จากข้อผิดพลาด และแก้ปัญหาอย่างจริงจัง</p></div><div class="card"><div class="big">Commitment</div><p class="med">มุ่งมั่นส่งมอบงานที่ดีที่สุด ยึดมั่นเป้าหมายระยะยาวขององค์กร</p></div><div class="card"><div class="big">Assertiveness</div><p class="med">กล้าแสดงความเห็นอย่างสร้างสรรค์ และกล้าตัดสินใจบนข้อมูลที่ถูกต้อง</p></div></div><div class="note">ใน Mission 1 และ 2 เราจะใช้ค่านิยมเหล่านี้เป็น Criteria เพื่อให้ AI ไม่ตอบแบบทั่วไป</div></div></section>
+<section class="slide" data-level="PEOPLE"><div class="screen"><div class="kicker"><span class="dot"></span> PEOPLE &amp; CULTURE</div><h2 class="title">บทบาทของฝ่าย People &amp; Culture</h2>
+<div class="grid three"><div class="card orange"><div class="big">สรรหา</div><p class="med">ดึงดูดบุคลากรที่มีศักยภาพและตรงกับค่านิยมองค์กร</p></div><div class="card yellow"><div class="big">วัฒนธรรม</div><p class="med">ส่งเสริม Accountability, Commitment และ Assertiveness</p></div><div class="card purple"><div class="big">พัฒนา</div><p class="med">จัดอบรม Soft Skill / Leadership และสนับสนุนการเติบโต</p></div></div></div></section>
+<section class="slide" data-level="MISSIONS"><div class="screen"><div class="kicker"><span class="dot"></span> HANDS-ON MISSIONS</div><h2 class="title">3 ภารกิจหลักของวันนี้</h2>
+<div class="grid three"><div class="card orange"><span class="tag">MISSION 1</span><div class="big">HR Role / JD</div><p class="med">ร่าง Role Profile หรือ Job Description จากข้อมูล Primary Shoes</p></div><div class="card purple"><span class="tag">MISSION 2</span><div class="big">KPI &amp; Competency</div><p class="med">แปลงเป้าหมายธุรกิจและค่านิยมเป็น KPI/Competency</p></div><div class="card lime"><span class="tag">MISSION 3</span><div class="big">Engagement → Dashboard</div><p class="med">วิเคราะห์ผลสำรวจและแปลงเป็น insight, dashboard, action plan</p></div></div><div class="note">ทุกภารกิจใช้ Prompt Path เดียวกัน: Goal / Context / Data / Criteria / Output / Guardrail</div></div></section>
+<section class="slide" data-level="MISSION 1"><div class="screen"><div class="kicker"><span class="dot"></span> MISSION 1</div><h2 class="title"><span class="nowrap">สร้าง HR Role</span> / <span class="nowrap">Job Description</span></h2><p class="subtitle">ภารกิจนี้ให้ผู้เรียนใช้ AI ช่วยร่าง JD หรือ Role Profile ที่ไม่ใช่แค่ “ลิสต์หน้าที่” แต่ต้องเชื่อมโยงกับบริบทธุรกิจ เป้าหมายองค์กร ค่านิยม และบทบาทของฝ่าย People &amp; Culture</p><div class="grid three"><div class="card purple"><div class="big">โจทย์ที่ต้องทำ</div><p class="med">เลือก 1 ตำแหน่งในฝ่าย People &amp; Culture แล้วสร้าง Prompt เพื่อให้ AI ช่วยร่าง JD / Role Profile</p></div><div class="card orange"><div class="big">ข้อมูลที่ต้องใช้</div><ul><li>เป้าหมายของ Primary Shoes</li><li>Core Values: Accountability, Commitment, Assertiveness</li><li>หน้าที่ของฝ่าย People &amp; Culture</li></ul></div><div class="card lime"><div class="big">ผลลัพธ์ที่คาดหวัง</div><p class="med">ได้ Prompt ที่สั่งให้ AI สร้างตาราง JD พร้อมหน้าที่หลัก คุณสมบัติ Competency และข้อควรระวัง</p></div></div><div class="note">เป้าหมายของ Mission 1 คือฝึกให้เห็นว่า Prompt ที่ดีต้องให้ “บริบท + ข้อมูล + เกณฑ์” ไม่ใช่แค่สั่งว่า “ช่วยเขียน JD”</div></div></section><section class="slide" data-level="THINK FIRST"><div class="screen"><div class="kicker"><span class="dot"></span> THINK BEFORE PROMPTING</div><h2 class="title">ก่อนเขียน Prompt: คิดให้ชัดก่อนว่า JD นี้จะใช้ทำอะไร</h2><div class="grid three"><div class="card purple"><div class="big">1. เลือกบทบาท</div><ul><li>ตำแหน่งที่จะร่างคืออะไร?</li><li>อยู่ในฝ่ายไหน?</li><li>ต้องสนับสนุนเป้าหมายธุรกิจข้อใด?</li></ul></div><div class="card orange"><div class="big">2. เลือกข้อมูล</div><ul><li>ใช้ข้อมูลบริษัทส่วนไหน?</li><li>ใช้ค่านิยมข้อใดเป็นเกณฑ์?</li><li>มีข้อมูลอะไรที่ไม่ควรให้ AI แต่งเอง?</li></ul></div><div class="card lime"><div class="big">3. เลือก Output</div><ul><li>ต้องการ JD แบบเล่าเรื่องหรือตาราง?</li><li>ต้องมี Competency หรือไม่?</li><li>ใครจะนำผลลัพธ์ไปใช้ต่อ?</li></ul></div></div><div class="note">ให้เขียนเป็น bullet สั้น ๆ ก่อน แล้วค่อยใส่ลงช่อง Goal / Context / Data / Criteria / Output / Guardrail ในหน้าถัดไป</div></div></section>
+<section class="slide" data-level="MISSION 1"><div class="screen"><h2 class="title">Mission 1 Workspace</h2><div class="split"><div class="card"><div class="workspace">
+<div class="wrow"><label>Goal*</label><textarea class="textarea save m1req" data-key="m1_goal" placeholder="เช่น ช่วยร่าง JD สำหรับตำแหน่ง People &amp; Culture Officer"></textarea></div>
+<div class="wrow"><label>Context*</label><textarea class="textarea save m1req" data-key="m1_context" placeholder="บริบทบริษัท Primary Shoes และเหตุผลที่ต้องมีบทบาทนี้"></textarea></div>
+<div class="wrow"><label>Data*</label><textarea class="textarea save m1req" data-key="m1_data" placeholder="ใช้ข้อมูลเป้าหมายบริษัท ค่านิยม และหน้าที่ฝ่าย People &amp; Culture"></textarea></div>
+<div class="wrow"><label>Criteria*</label><textarea class="textarea save m1req" data-key="m1_criteria" placeholder="เชื่อมโยงกับ Accountability, Commitment, Assertiveness"></textarea></div>
+<div class="wrow"><label>Output*</label><textarea class="textarea save m1req" data-key="m1_output" placeholder="จัดเป็นตาราง หน้าที่หลัก / ความรับผิดชอบ / คุณสมบัติ / Competency"></textarea></div>
+<div class="wrow"><label>Guardrail</label><textarea class="textarea save" data-key="m1_guardrail" placeholder="ห้ามสร้างข้อมูลเงินเดือน สวัสดิการ หรือเงื่อนไขที่ไม่ได้ให้มา"></textarea></div></div><div class="status" id="m1_status">Required fields completed: 0 / 5</div><div class="btns"><button class="btn lime" onclick="buildPrompt('m1',['goal','context','data','criteria','output'], false)">Build Prompt</button><button class="btn secondary" onclick="copyPrompt('m1')">Copy</button><button class="btn purple" onclick="downloadMission('m1','Mission 1 - HR Role JD')">Export .txt</button></div></div><div class="card"><div class="big">Generated Prompt</div><div class="code" id="m1_prompt">กรอกช่องทางซ้าย แล้วกด Build Prompt</div></div></div></div></section>
+<section class="slide" data-level="DEBRIEF"><div class="screen"><h2 class="title">Mission 1 Debrief</h2><div class="grid three"><div class="card"><div class="big">Prompt ชัดขึ้นอย่างไร?</div><p class="med">จาก “ช่วยเขียน JD” กลายเป็นโจทย์ที่มีบริบท ข้อมูล และรูปแบบ output</p></div><div class="card"><div class="big">Criteria ช่วยอะไร?</div><p class="med">ทำให้ JD เชื่อมกับค่านิยมและเป้าหมายองค์กร ไม่ใช่ JD ทั่วไป</p></div><div class="card"><div class="big">Guardrail ป้องกันอะไร?</div><p class="med">ลดการแต่งข้อมูล เช่น เงินเดือน สวัสดิการ หรือเงื่อนไขที่ไม่ได้มีในข้อมูล</p></div></div></div></section>
+<section class="slide" data-level="MISSION 2"><div class="screen"><div class="kicker"><span class="dot"></span> MISSION 2</div><h2 class="title"><span class="nowrap">KPI &amp; Competency</span> จากเป้าหมายองค์กร</h2><p class="subtitle">ภารกิจนี้ให้ผู้เรียนใช้ AI ช่วยแปลงเป้าหมายธุรกิจของ Primary Shoes ให้เป็น KPI หรือ Competency ที่ HR สามารถนำไปใช้สนับสนุนการเติบโตขององค์กรได้</p><div class="grid three"><div class="card orange"><div class="big">โจทย์ที่ต้องทำ</div><p class="med">เลือก 1 หน่วยงาน แล้วสร้าง Prompt ให้ AI เสนอ KPI / Competency ที่เชื่อมกับเป้าหมายธุรกิจ</p></div><div class="card yellow"><div class="big">เป้าหมายธุรกิจ</div><ul><li>ยอดขาย 200 ล้านบาท</li><li>กำไรสุทธิ 30%</li><li>Customer Satisfaction มากกว่า 90%</li></ul></div><div class="card purple"><div class="big">Focus ของภารกิจ</div><p class="med">เน้น <b>Criteria</b> เป็นพิเศษ เพราะเกณฑ์ที่ดีจะทำให้ AI ไม่เสนอ KPI กว้าง ๆ หรือวัดไม่ได้</p></div></div><div class="note">ภารกิจนี้ไม่ได้ให้ AI “คิด KPI แทน HR” แต่ให้ AI ช่วยจัดทางเลือกเบื้องต้น แล้ว HR ตรวจว่าตรงบทบาท วัดได้ และเป็นธรรมจริงหรือไม่</div></div></section><section class="slide" data-level="THINK FIRST"><div class="screen"><div class="kicker"><span class="dot"></span> THINK BEFORE PROMPTING</div><h2 class="title split-title"><span class="title-line top">ก่อนเขียน Prompt:</span><span class="title-line sub">แยก “เป้าหมายธุรกิจ” ออกจาก “ตัวชี้วัดคน”</span></h2><div class="grid three"><div class="card orange"><div class="big">1. Business Goal</div><p class="med">บริษัทต้องการยอดขาย กำไร และความพึงพอใจลูกค้า เป้าหมายเหล่านี้ไม่ใช่ KPI ของทุกคนโดยตรง</p></div><div class="card purple"><div class="big">2. Role Contribution</div><p class="med">ถามว่า “หน่วยงานนี้มีส่วนช่วยเป้าหมายอย่างไร” ก่อนให้ AI เสนอ KPI หรือ Competency</p></div><div class="card lime"><div class="big">3. Measurement Quality</div><ul><li>วัดได้จริงไหม?</li><li>มีแหล่งข้อมูลไหม?</li><li>ถี่แค่ไหน?</li><li>ใครรับผิดชอบ?</li></ul></div></div><div class="note">อย่าให้ AI เสนอ KPI ที่ฟังดูดีแต่ไม่มีเจ้าของข้อมูล ไม่มีวิธีวัด หรือไม่สัมพันธ์กับบทบาทจริง</div></div></section><section class="slide" data-level="PROMPT GUIDE"><div class="screen"><div class="kicker"><span class="dot"></span> PROMPT GUIDE</div><h2 class="title">แนวทางเขียน Prompt: KPI / Competency</h2><p class="subtitle">ก่อนกรอก Prompt Path ให้คิดจาก “เป้าหมายธุรกิจ” → “บทบาทของหน่วยงาน” → “พฤติกรรมหรือผลลัพธ์ที่วัดได้”</p><div class="grid three"><div class="card orange"><div class="big">1. เริ่มจาก Business Goal</div><ul><li>ยอดขาย 200 ล้านบาท</li><li>กำไรสุทธิ 30%</li><li>Customer Satisfaction มากกว่า 90%</li></ul></div><div class="card purple"><div class="big">2. เลือกมุม HR ที่เกี่ยวข้อง</div><ul><li>หน่วยงานนี้มีส่วนช่วยเป้าหมายอย่างไร?</li><li>พฤติกรรมแบบไหนควรถูกพัฒนา?</li><li>Core Values ใดควรถูกแปลงเป็น competency?</li></ul></div><div class="card lime"><div class="big">3. ระวัง KPI ที่กว้างเกินไป</div><ul><li>หลีกเลี่ยงคำว่า “ทำให้ดีขึ้น”</li><li>ต้องวัดได้ มีแหล่งข้อมูล และมีเจ้าของ</li><li>ต้องสัมพันธ์กับบทบาทจริงของหน่วยงาน</li></ul></div></div><div class="card prompt-starter"><div class="big">ตัวอย่าง Prompt Starter</div><div class="code large-code">ช่วยออกแบบ KPI / Competency สำหรับ [หน่วยงาน] โดยใช้เป้าหมายองค์กรและค่านิยมของ Primary Shoes เป็นเกณฑ์
+
+โปรดจัดคำตอบเป็นตาราง โดยมี: ชื่อ KPI/Competency, เหตุผล, วิธีวัด, แหล่งข้อมูล, ความถี่, และข้อควรระวัง</div></div></div></section>
+<section class="slide" data-level="MISSION 2"><div class="screen"><h2 class="title">Mission 2 Workspace</h2><div class="split"><div class="card"><div class="workspace">
+<div class="wrow"><label>Goal*</label><textarea class="textarea save m2req" data-key="m2_goal" placeholder="เช่น สร้าง KPI และ Competency สำหรับฝ่ายขายและบริการลูกค้า"></textarea></div>
+<div class="wrow"><label>Context*</label><textarea class="textarea save m2req" data-key="m2_context" placeholder="Primary Shoes ต้องการให้แต่ละฝ่ายทำงานสอดคล้องกับเป้าหมายธุรกิจ"></textarea></div>
+<div class="wrow"><label>Data*</label><textarea class="textarea save m2req" data-key="m2_data" placeholder="เป้าหมายยอดขาย 200 ล้านบาท กำไร 30% CSAT &gt; 90% หน้าที่หน่วยงาน และค่านิยม"></textarea></div>
+<div class="wrow"><label>Criteria*</label><textarea class="textarea save m2req" data-key="m2_criteria" placeholder="KPI ต้องวัดได้ เชื่อมกับบทบาทจริง และสะท้อน business goal / core values"></textarea></div>
+<div class="wrow"><label>Output*</label><textarea class="textarea save m2req" data-key="m2_output" placeholder="ตาราง KPI / Definition / วิธีวัด / ความถี่ / Owner / Competency ที่เกี่ยวข้อง"></textarea></div>
+<div class="wrow"><label>Guardrail</label><textarea class="textarea save" data-key="m2_guardrail" placeholder="อย่าสร้าง KPI ที่วัดไม่ได้ หรือไม่เกี่ยวข้องกับบทบาทของหน่วยงาน"></textarea></div></div><div class="status" id="m2_status">Required fields completed: 0 / 5</div><div class="btns"><button class="btn lime" onclick="buildPrompt('m2',['goal','context','data','criteria','output'], false)">Build Prompt</button><button class="btn secondary" onclick="copyPrompt('m2')">Copy</button><button class="btn purple" onclick="downloadMission('m2','Mission 2 - KPI Competency')">Export .txt</button></div></div><div class="card"><div class="big">Generated Prompt</div><div class="code" id="m2_prompt">กรอกช่องทางซ้าย แล้วกด Build Prompt</div></div></div></div></section>
+<section class="slide" data-level="KPI"><div class="screen"><h2 class="title">Good KPI vs Weak KPI</h2><div class="grid two"><div class="card orange"><div class="big">Weak KPI</div><div class="code">ทำงานให้ดีขึ้น</div><p class="med">ปัญหา: วัดไม่ได้ ไม่รู้ owner ไม่รู้กรอบเวลา ไม่เชื่อมกับผลลัพธ์ธุรกิจ</p></div><div class="card lime"><div class="big">Better KPI</div><div class="code">ลดเวลาตอบกลับข้อร้องเรียนลูกค้าให้ไม่เกิน 24 ชั่วโมง ภายในไตรมาส 3 โดยวัดจากระบบ CRM</div><p class="med">จุดแข็ง: วัดได้ มีเวลา มี data source และเชื่อมกับ customer satisfaction</p></div></div><div class="note">AI ช่วยเสนอ KPI ได้ แต่ HR ต้องตรวจว่ามันวัดได้ เป็นธรรม และสัมพันธ์กับบทบาทจริง</div></div></section>
+<section class="slide" data-level="MISSION 3"><div class="screen"><div class="kicker"><span class="dot"></span> MISSION 3</div><h2 class="title"><span class="nowrap">Employee Engagement</span> → <span class="nowrap">Insight</span> → <span class="nowrap">Dashboard</span></h2><p class="subtitle">ภารกิจนี้ให้ผู้เรียนใช้ AI ช่วยอ่านข้อมูล Employee Engagement ทั้งคะแนนและคำตอบปลายเปิด แล้วแปลงเป็น insight, dashboard indicators และ action plan ที่ติดตามผลได้</p><div class="grid three"><div class="card purple"><div class="big">โจทย์ที่ต้องทำ</div><p class="med">สร้าง Prompt ให้ AI วิเคราะห์ผลสำรวจและสรุปประเด็นที่ HR ควรนำเสนอผู้บริหาร</p></div><div class="card orange"><div class="big">ข้อมูลที่ต้องใช้</div><ul><li>คะแนน 5 มิติ: Trust, Growth, Recognition, Leadership, Well-being</li><li>คำตอบปลายเปิด 7 คำถาม</li><li>ข้อมูลหน่วยงาน ระดับตำแหน่ง และอายุงาน</li></ul></div><div class="card lime"><div class="big">ผลลัพธ์ที่คาดหวัง</div><p class="med">ได้ insight, HR action, dashboard indicator, owner, frequency และ trigger สำหรับติดตามผล</p></div></div><div class="note">Guardrail สำคัญ: ข้อมูลมีเพียง 10 คน จึงควรสรุปเป็น signal เบื้องต้น ไม่ใช่ข้อสรุปเด็ดขาดระดับองค์กร</div></div></section><section class="slide" data-level="THINK FIRST"><div class="screen"><div class="kicker"><span class="dot"></span> THINK BEFORE PROMPTING</div><h2 class="title">ก่อนเขียน Prompt: แยกข้อมูล คะแนน Theme และข้อจำกัด</h2><div class="grid three"><div class="card purple"><div class="big">1. Quantitative Signal</div><p class="med">คะแนนแต่ละมิติบอกสัญญาณเบื้องต้น เช่น มิติไหนสูง ต่ำ หรือควรจับตา</p></div><div class="card orange"><div class="big">2. Qualitative Theme</div><p class="med">คำตอบปลายเปิดช่วยบอกเรื่องราว เช่น communication, recognition, growth, workload, well-being</p></div><div class="card yellow"><div class="big">3. Limitation</div><p class="med">ข้อมูล 10 คนใช้เป็นสัญญาณเริ่มต้น ต้องระวังการฟันธงระดับองค์กรหรือรายบุคคล</p></div></div><div class="note">ใน Prompt ให้สั่ง AI แยก “สิ่งที่ข้อมูลบอก”, “สิ่งที่ควรตรวจเพิ่ม” และ “ข้อเสนอที่นำไปทดลองได้” ออกจากกันอย่างชัดเจน</div></div></section>
+<section class="slide" data-level="DATA"><div class="screen"><div class="kicker"><span class="dot"></span> ENGAGEMENT DATA PREVIEW</div><h2 class="title">ภาพรวมผลสำรวจ Engagement</h2>
+<div class="split"><div class="card light"><div class="big">คะแนนเฉลี่ยจากข้อมูล 10 คน</div><table class="mini-table" style="color:#111827"><tr><th>มิติ</th><th>Avg.</th><th>Signal</th></tr><tr><td>Trust</td><td>5.1</td><td><div class="scorebar"><span style="width:73%"></span></div></td></tr><tr><td>Growth</td><td>5.1</td><td><div class="scorebar"><span style="width:73%"></span></div></td></tr><tr><td>Recognition</td><td>4.9</td><td><div class="scorebar"><span style="width:70%"></span></div></td></tr><tr><td>Leadership</td><td>5.4</td><td><div class="scorebar"><span style="width:77%"></span></div></td></tr><tr><td>Well-being</td><td>5.0</td><td><div class="scorebar"><span style="width:71%"></span></div></td></tr></table></div><div class="card purple"><div class="big">Themes จากคำตอบปลายเปิด</div><ul><li>ต้องการการสื่อสารจากผู้บริหารที่ชัดเจนขึ้น</li><li>ต้องการ IDP / career growth / coaching</li><li>Recognition ที่มีความหมายคือ feedback และคำชมที่ชัดเจน</li><li>ต้องการลดขั้นตอนซ้ำซ้อนและ workload ที่ไม่จำเป็น</li><li>ต้องการ flexibility, hybrid, wellness และ work-life balance</li></ul></div></div><div class="note">Guardrail สำคัญ: ข้อมูลมีเพียง 10 คน จึงควรสรุปเป็น “signal เบื้องต้น” ไม่ใช่ข้อสรุปเด็ดขาดระดับองค์กร</div></div></section>
+<section class="slide" data-level="MISSION 3"><div class="screen"><h2 class="title">Mission 3 Workspace</h2><div class="split"><div class="card"><div class="workspace">
+<div class="wrow"><label>Goal*</label><textarea class="textarea save m3req" data-key="m3_goal" placeholder="ช่วยวิเคราะห์ผลสำรวจ Employee Engagement และแปลงเป็น dashboard/action plan"></textarea></div>
+<div class="wrow"><label>Context*</label><textarea class="textarea save m3req" data-key="m3_context" placeholder="HR ต้องเตรียม insight เพื่อคุยกับผู้บริหาร Primary Shoes"></textarea></div>
+<div class="wrow"><label>Data*</label><textarea class="textarea save m3req" data-key="m3_data" placeholder="คะแนน 5 มิติ ค่าเฉลี่ย คำตอบปลายเปิด และบริบทบริษัท"></textarea></div>
+<div class="wrow"><label>Criteria*</label><textarea class="textarea save m3req" data-key="m3_criteria" placeholder="แยก quantitative signal / qualitative theme / risk / missing data / action priority"></textarea></div>
+<div class="wrow"><label>Output*</label><textarea class="textarea save m3req" data-key="m3_output" placeholder="Executive summary, Insight table, Dashboard indicators, Action plan"></textarea></div>
+<div class="wrow"><label>Guardrail</label><textarea class="textarea save" data-key="m3_guardrail" placeholder="ห้ามสรุปเกินข้อมูล ห้ามระบุรายบุคคล และต้องบอกข้อจำกัดเรื่อง sample size"></textarea></div></div><div class="status" id="m3_status">Required fields completed: 0 / 5</div><div class="btns"><button class="btn lime" onclick="buildPrompt('m3',['goal','context','data','criteria','output'], false)">Build Prompt</button><button class="btn secondary" onclick="copyPrompt('m3')">Copy</button><button class="btn purple" onclick="downloadMission('m3','Mission 3 - Engagement Dashboard')">Export .txt</button></div></div><div class="card"><div class="big">Generated Prompt</div><div class="code" id="m3_prompt">กรอกช่องทางซ้าย แล้วกด Build Prompt</div></div></div></div></section>
+<section class="slide" data-level="DEBRIEF"><div class="screen"><h2 class="title">Mission 3 Debrief</h2><div class="grid four"><div class="card"><div class="big">Insight</div><p class="small">AI แยก signal และ theme ได้ชัดหรือไม่?</p></div><div class="card"><div class="big">Evidence</div><p class="small">AI อ้างอิงข้อมูลจริง หรือเดาเกินข้อมูล?</p></div><div class="card"><div class="big">Action</div><p class="small">ข้อเสนอมี owner, timeline และ success measure หรือไม่?</p></div><div class="card"><div class="big">Guardrail</div><p class="small">AI ระบุข้อจำกัดของ sample size หรือไม่?</p></div></div></div></section>
+
+<section class="slide" data-level="CHECKLIST"><div class="screen"><div class="kicker"><span class="dot"></span> PROMPT CHECKLIST</div><h2 class="title">Checklist ก่อนใช้ AI กับงาน HR</h2>
+<div class="grid two"><div class="card lime"><div class="big">Prompt พร้อมหรือยัง?</div><ul><li>Goal ชัดหรือยัง?</li><li>Context เพียงพอไหม?</li><li>Data ให้ครบหรือยัง?</li><li>Criteria ใช้อะไร?</li><li>Output ต้องการแบบไหน?</li><li>Guardrail ระบุหรือยัง?</li></ul></div><div class="card orange"><div class="big">ความปลอดภัยพร้อมหรือยัง?</div><ul><li>มีข้อมูลส่วนบุคคลที่ต้องระวังหรือไม่?</li><li>AI กำลังสรุปเกินข้อมูลหรือไม่?</li><li>AI กำลังตัดสินใจแทน HR หรือไม่?</li><li>มีมนุษย์ตรวจคำตอบก่อนใช้จริงหรือไม่?</li></ul></div></div></div></section>
+<section class="slide" data-level="ACTION PLAN"><div class="screen"><div class="kicker"><span class="dot"></span> NEXT STEP</div><h2 class="title">หลังอบรม ฉันจะเริ่มใช้ AI กับงานอะไร?</h2><p class="subtitle">เลือกงานจริง 1 เรื่องที่อยากนำ AI ไปช่วยภายใน 7 วัน แล้วเขียนแผนให้ชัดพอที่จะกลับไปทดลองใช้ได้ทันที</p><div class="split action-plan-layout"><div class="card action-card"><div class="big">เขียนแผนของฉัน</div><div class="workspace post-workspace action-plan-questions"><div class="wrow"><label>งาน HR ที่จะลองใช้ AI</label><textarea class="textarea save action-field" data-key="after_task" placeholder="เช่น ร่าง JD, วิเคราะห์ผลสำรวจ, เตรียมคำถามสัมภาษณ์"></textarea></div><div class="wrow"><label>ให้ AI ช่วยขั้นตอนไหน</label><textarea class="textarea save action-field" data-key="after_step" placeholder="เช่น ร่างฉบับแรก, สรุปข้อมูล, จัดหมวดหมู่ insight"></textarea></div><div class="wrow"><label>ข้อมูลที่ต้องเตรียม</label><textarea class="textarea save action-field" data-key="after_data" placeholder="เช่น เป้าหมายงาน, JD เดิม, KPI, feedback, ผลสำรวจ"></textarea></div><div class="wrow"><label>เกณฑ์ที่ใช้ตรวจคำตอบ</label><textarea class="textarea save action-field" data-key="after_review_criteria" placeholder="เช่น ถูกต้อง ครบถ้วน สอดคล้องนโยบาย เป็นธรรม ปลอดภัย"></textarea></div><div class="wrow"><label>เรื่องที่ AI ห้ามตัดสินใจแทน</label><textarea class="textarea save action-field" data-key="after_human_decision" placeholder="เช่น ให้คะแนนผลงาน เลือกคน เลื่อนตำแหน่ง สรุปสาเหตุโดยไม่มีหลักฐาน"></textarea></div></div></div><div class="grid" style="gap:10px"><div class="card yellow action-guidance"><div class="big">ก่อนกลับไปใช้จริง ให้เช็ก 3 อย่าง</div><ol><li><b>เริ่มจากงานเล็กก่อน</b><br><span class="small">เลือกงานที่ไม่เสี่ยงสูง และตรวจสอบข้อมูลได้</span></li><li><b>ใช้ Prompt Path ทุกครั้ง</b><br><span class="small">Goal, Context, Data, Criteria, Output, Guardrail</span></li><li><b>ให้คนตรวจเสมอ</b><br><span class="small">AI ช่วยเตรียมคำตอบ แต่ HR ต้องตรวจความถูกต้องและผลกระทบต่อคน</span></li></ol></div><div class="card purple"><div class="big">สิ่งที่จะติดตัวกลับไป</div><p class="med">บันทึก Prompt และแผนใช้งานนี้เป็นชุดทดลองใช้ส่วนตัว</p><ul><li>Prompt จาก Mission 1–3</li><li>Checklist สำหรับตรวจคำตอบ AI</li><li>แผนใช้งานหลังอบรมของฉัน</li></ul><div class="btns" style="margin-top:12px"><button class="btn purple" onclick="downloadAll()">บันทึกชุด Prompt และแผนใช้งาน</button></div></div></div><div class="facilitator note"><b>Speaker notes:</b> ให้ผู้เรียนเลือก “งานจริง 1 เรื่อง” ที่สามารถทดลองใช้ได้ภายใน 7 วัน เพื่อให้เกิด follow-up หลังอบรมจริง</div></div></section><section class="slide" data-level="CLOSING"><div class="screen center"><div class="kicker"><span class="dot"></span> CLOSING</div><h2 class="title">AI ที่ดีไม่ได้เริ่มจากเครื่องมือที่เก่งที่สุด</h2><p class="subtitle">แต่เริ่มจาก HR ที่ตั้งคำถามได้ชัดที่สุด ให้ข้อมูลที่เหมาะสม ใช้เกณฑ์ที่ถูกต้อง และรู้ว่าตรงไหนต้องให้มนุษย์ตัดสินใจ</p><div class="grid three"><div class="card"><div class="big">Use AI</div><p class="small">ให้ช่วยร่าง สรุป และจัดโครงสร้าง</p></div><div class="card purple"><div class="big">Guide AI</div><p class="small">ด้วย Goal / Context / Data / Criteria / Output / Guardrail</p></div><div class="card lime"><div class="big">Review AI</div><p class="small">ก่อนนำไปใช้กับเรื่องคนและองค์กร</p></div></div><div class="btns" style="justify-content:center"><button class="btn" onclick="go(0)">กลับไปหน้าแรก</button></div></div></section>
+</main>
+<div class="footer"><div class="navgroup"><button class="navbtn" id="prevBtn" onclick="go(current-1)">← ก่อนหน้า</button><button class="navbtn" id="nextBtn" onclick="go(current+1)">ถัดไป →</button><button class="navbtn" onclick="toggleOverview()">ดูสไลด์ทั้งหมด</button><button class="navbtn" onclick="toggleNotes()">Speaker Notes</button></div><div class="counter" id="counter">1 / 37</div><div class="navgroup"><button class="navbtn" id="fullscreenBtn" onclick="toggleFullscreen()">Fullscreen</button></div></div>
+</div>
+<div aria-hidden="true" class="overview" id="overview">
+<div class="overview-head">
+<div class="overview-title">สไลด์ทั้งหมด</div>
+<button class="navbtn" onclick="toggleOverview(false)">ปิด</button>
+</div>
+<div class="overview-grid" id="overviewGrid"></div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+const slides=[...document.querySelectorAll('.slide')];let current=0;
+function plainTitle(slide){
+  const t=slide.querySelector('.title')||slide.querySelector('h1,h2,h3');
+  return (t?.textContent||('Slide '+(slides.indexOf(slide)+1))).trim();
+}
+function buildOverview(){
+  const grid=document.getElementById('overviewGrid'); if(!grid) return;
+  grid.innerHTML='';
+  slides.forEach((sl,i)=>{
+    const card=document.createElement('button');
+    card.className='slide-thumb';
+    card.type='button';
+    card.innerHTML=`<div class="thumb-no">${i+1} / ${slides.length}</div><div class="thumb-title">${plainTitle(sl)}</div><div class="thumb-level">${sl.dataset.level||''}</div>`;
+    card.onclick=()=>{toggleOverview(false);go(i)};
+    grid.appendChild(card);
+  });
+}
+function toggleOverview(force){
+  const ov=document.getElementById('overview'); if(!ov) return;
+  const open=typeof force==='boolean'?force:!ov.classList.contains('open');
+  ov.classList.toggle('open',open); ov.setAttribute('aria-hidden',open?'false':'true');
+}
+function toggleFullscreen(){
+  if(document.fullscreenElement){document.exitFullscreen?.();}
+  else{document.documentElement.requestFullscreen?.();}
+}
+function updateFullscreenLabel(){
+  const b=document.getElementById('fullscreenBtn'); if(!b) return;
+  b.textContent=document.fullscreenElement?'ออกจาก Fullscreen':'Fullscreen';
+}
+
+function fit(){const screen=slides[current]?.querySelector('.screen');if(!screen)return;screen.style.transform='scale(1)';document.body.classList.remove('compact','ultra');const top=document.querySelector('.topbar')?.offsetHeight||0;const foot=document.querySelector('.footer')?.offsetHeight||0;const avail=Math.max(260,window.innerHeight-top-foot-20);const h=screen.scrollHeight;if(h>avail){const isAction=slides[current]?.dataset.level==='ACTION PLAN';let minScale=isAction?.82:.58;let s=Math.max(minScale,avail/h);screen.style.transform=`scale(${s})`;screen.style.transformOrigin='top center';}}
+function go(i){if(i<0||i>=slides.length)return;slides[current].classList.remove('active');current=i;slides[current].classList.add('active');update();setTimeout(fit,20)}
+function update(){const pct=Math.round((current)/(slides.length-1)*100);document.getElementById('bar').style.width=pct+'%';document.getElementById('barText').textContent=pct+'%';document.getElementById('levelPill').textContent=slides[current].dataset.level||'';document.getElementById('counter').textContent=(current+1)+' / '+slides.length;document.getElementById('prevBtn').disabled=current===0;document.getElementById('nextBtn').disabled=current===slides.length-1;updateFullscreenLabel()}
+function reveal(el){el.classList.toggle('revealed')}
+function markQuiz(el,ok){[...el.parentElement.querySelectorAll('.quiz-option')].forEach(x=>x.classList.remove('correct','wrong'));el.classList.add(ok?'correct':'wrong');toast(ok?'ถูกต้อง':'ลองคิดตาม Prompt Path อีกครั้ง')}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',1600)}
+function key(prefix,field){return `${prefix}_${field}`}
+function val(k){return (document.querySelector(`[data-key="${k}"]`)?.value||'').trim()}
+function buildPrompt(prefix,required,isFinal){let missing=required.filter(f=>!val(key(prefix,f)));if(missing.length){toast('กรุณากรอกช่องที่มี * ให้ครบ');return}const labels={goal:'Goal',context:'Context',data:'Data',criteria:'Criteria',output:'Output',guardrail:'Guardrail'};let parts=['คุณคือผู้ช่วยด้าน HR ที่มีความเชี่ยวชาญในการใช้ข้อมูลและเกณฑ์อย่างระมัดระวัง',''];['goal','context','data','criteria','output','guardrail'].forEach(f=>{const v=val(key(prefix,f));if(v)parts.push(`${labels[f]}:\n${v}\n`)});parts.push('โปรดตอบโดยอ้างอิงเฉพาะข้อมูลที่ได้รับ แยกข้อเท็จจริงออกจากข้อเสนอแนะ ระบุข้อมูลที่ยังไม่เพียงพอ และอย่าตัดสินใจแทน HR หรือผู้บริหาร');if(isFinal)parts.push('\nในตอนท้าย ให้สรุป Human Decision Points ที่ HR/ผู้บริหารต้องพิจารณาเอง');document.getElementById(prefix+'_prompt').textContent=parts.join('\n');localStorage.setItem(prefix+'_prompt',parts.join('\n'));toast('Build Prompt สำเร็จ')}
+function copyPrompt(prefix){const txt=document.getElementById(prefix+'_prompt')?.textContent||'';navigator.clipboard?.writeText(txt);toast('คัดลอก Prompt แล้ว')}
+function downloadText(filename,text){const blob=new Blob([text],{type:'text/plain;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=filename.replace(/[\\/:*?"<>|]/g,'_')+'.txt';a.click();URL.revokeObjectURL(a.href)}
+function downloadMission(prefix,name){const txt=document.getElementById(prefix+'_prompt')?.textContent||'';downloadText(name,txt)}
+function downloadAll(){
+  const all = ['Generative AI สำหรับงาน HR - ชุด Prompt และแผนใช้งานหลังอบรม', ''];
+  const missionNames = {
+    m1: 'Mission 1: JD / Role Profile',
+    m2: 'Mission 2: KPI / Competency',
+    m3: 'Mission 3: Engagement Insight / Dashboard'
+  };
+  ['m1','m2','m3'].forEach(p=>{
+    const el=document.getElementById(p+'_prompt');
+    const text=(el && el.textContent.trim()) ? el.textContent.trim() : 'ยังไม่ได้ Build Prompt';
+    all.push('--- ' + missionNames[p] + ' ---\n' + text + '\n');
+  });
+  all.push('--- CHECKLIST ก่อนใช้ AI กับงาน HR ---\nGoal / Context / Data / Criteria / Output / Guardrail\nตรวจข้อมูลส่วนบุคคล ตรวจการสรุปเกินข้อมูล และให้มนุษย์ review ก่อนใช้งานจริง\n');
+  const labels={
+    after_task:'งาน HR เรื่องแรกที่จะลองใช้ AI ช่วย',
+    after_step:'ขั้นตอนของงานที่ AI จะช่วย',
+    after_data:'ข้อมูลหรือเอกสารที่ต้องเตรียม',
+    after_review_criteria:'เกณฑ์ที่ใช้ตรวจคำตอบของ AI',
+    after_human_decision:'เรื่องที่จะไม่ให้ AI ตัดสินใจแทน'
+  };
+  const plan=['--- ACTION PLAN หลังอบรม ---'];
+  Object.keys(labels).forEach(k=>{
+    const el=document.querySelector('[data-key="'+k+'"]');
+    plan.push(labels[k]+': '+(el&&el.value.trim()?el.value.trim():'ยังไม่ได้กรอก'));
+  });
+  all.push(plan.join('\n'));
+  downloadText('AI HR Workshop - Prompt + Action Plan', all.join('\n'));
+}
+function toggleNotes(){document.body.classList.toggle('show-notes')}
+function saveActionPlan(){document.querySelectorAll('.action-field').forEach(el=>localStorage.setItem(el.dataset.key,el.value));toast('บันทึกแผนใช้งานหลังอบรมแล้ว')}
+function saveInputs(){document.querySelectorAll('.save').forEach(el=>{const k=el.dataset.key;el.value=localStorage.getItem(k)||el.value;el.addEventListener('input',()=>{localStorage.setItem(k,el.value);updateStatus()})});updateStatus()}
+function updateStatus(){[['m1',5],['m2',5],['m3',5]].forEach(([p,total])=>{const n=[...document.querySelectorAll('.'+p+'req')].filter(x=>x.value.trim()).length;const s=document.getElementById(p+'_status');if(s)s.textContent=`Required fields completed: ${n} / ${total}`})}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight')go(current+1);if(e.key==='ArrowLeft')go(current-1);if(e.key==='Escape')toggleOverview(false)});document.addEventListener('fullscreenchange',()=>{updateFullscreenLabel();setTimeout(fit,80)});window.addEventListener('resize',fit);buildOverview();saveInputs();update();fit();
+</script>
+</body></html>
